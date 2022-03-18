@@ -189,3 +189,17 @@
 | `setQueryData`    | method to `queryClient` | client     | yes             |
 | `placeholderData` | option to `useQuery`    | client     | no              |
 | `initialData`     | option to `useQuery`    | client     | yes             |
+
+-   ### Prefetch Treatments (this app)
+    -   For this app, we want to prefetch the Treatments on home page load, even tho Treatments are only visible on the Treatments page/component
+        -   ex.) user research said 85% of home page loads are followed by user clicking to view the treatments tab (reasonable given the product service)
+        -   **Treatments don't change often - ie. the data is stable - so cached data isn't really necessary**
+    -   garbage collected if no `useQuery` is called after `cacheTime`
+        -   if not loaded by default `cacheTime` (5 minutes), specify a longer cacheTime
+    -   `prefetchQuery` is a method on the `queryClient` - it runs once
+        -   adding to the client cache
+    -   `useQueryClient` returns `queryClient` (with Provider)
+    -   We will create a `usePrefetchTreatments` hook within `useTreatments.ts`
+        -   uses the same query function and key as the `useTreatment` call
+        -   call `usePrefetchTreatments` from the Home component
+            -   As long as user clicks on 'Treatments' tab before `cacheTime` expires (5 minutes), then they won't have to wait on the server call to get the Treatments from the server because the data will already be in the cache from the prefetch
