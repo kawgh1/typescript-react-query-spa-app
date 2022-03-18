@@ -46,7 +46,7 @@
 
                 // query function for useQuery
 
-                const getTreatments = async (): Promise< Treatment[] > => {
+                const getTreatments = async (): Promise<Treatment[]> => {
                     const { data } = await axiosInstance.get( '/treatments' );
                     return data;
                 };
