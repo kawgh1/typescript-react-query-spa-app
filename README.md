@@ -213,3 +213,13 @@
 
 -   ### Filtering with the `select` option
     -   Allow user to filter out any appointments that aren't available
+    -   why is the `select` option the best way to do this?
+        -   React-query memo-izes to reduce unnecessary computation
+        -   tech details:
+            -   triple equals comparison of `select` function
+            -   only runs if data changes **_and_** the function has changed
+        -   need a stable function (`useCallback` for anonymous function)
+        -   reference: https://tkdodo.eu/blog/react-query-data-transformations
+    -   State of whether filter is on, whether user is filtering out appointments, is contained in hook (like `monthYear`)
+    -   filter function in `src/components/appointments/utils.ts`
+        -   `getAvailableAppointments`
