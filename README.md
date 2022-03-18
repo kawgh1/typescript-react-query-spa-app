@@ -161,10 +161,10 @@
             // here we establish the defaultOptions of our QueryClient to include the onError handler
 
             export const queryClient = new QueryClient({
-            defaultOptions: {
-            queries: {
-            onError: queryErrorHandler,
-            },
-            },
+                defaultOptions: {
+                    queries: {
+                        onError: queryErrorHandler,
+                    },
+                },
 
             });
