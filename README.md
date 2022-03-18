@@ -40,7 +40,6 @@
                 };
 
         -   using pre-defined query keys in our `useQuery` hooks allows us to be consistent across app components
-        -   ` const { data } = useQuery( queryKeys.treatments, getTreatments );`
 
                 File: src/treatments/hooks/useTreatments.js
 
