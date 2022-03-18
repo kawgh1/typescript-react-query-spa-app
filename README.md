@@ -108,8 +108,8 @@
 
                         // for when we need a query function for useQuery
                         const getTreatments = async (): Promise<Treatment[]> => {
-                        const { data } = await axiosInstance.get('/treatments');
-                        return data;
+                            const { data } = await axiosInstance.get('/treatments');
+                            return data;
                         };
 
                         export const useTreatments = (): Treatment[] => {
