@@ -183,8 +183,9 @@
 
 -   ### Options for pre-populating data
 
-|                 | where to use?           | data from? | added to cache? |
-| --------------- | ----------------------- | ---------- | --------------- |
-| `prefetchQuery` | method to `queryClient` | server     | yes             |
-|                 |                         |            |                 |
-|                 |                         |            |                 |
+|                   | where to use?           | data from? | added to cache? |
+| ----------------- | ----------------------- | ---------- | --------------- |
+| `prefetchQuery`   | method to `queryClient` | server     | yes             |
+| `setQueryData`    | method to `queryClient` | client     | yes             |
+| `placeholderData` | option to `useQuery`    | client     | no              |
+| `initialData`     | option to `useQuery`    | client     | yes             |
