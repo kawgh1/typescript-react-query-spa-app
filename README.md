@@ -129,7 +129,7 @@
                 });
                 return data;
 
-            };
+                };
 
     -   ### Setting default `onError` handler for our Query Client
 
@@ -156,15 +156,15 @@
             toast.closeAll();
             toast({ id, title, status: 'error', variant: 'subtle', isClosable: true });
 
-        }
+            }
 
-        // here we establish the defaultOptions of our QueryClient to include the onError handler
+            // here we establish the defaultOptions of our QueryClient to include the onError handler
 
-        export const queryClient = new QueryClient({
-        defaultOptions: {
-        queries: {
-        onError: queryErrorHandler,
-        },
-        },
+            export const queryClient = new QueryClient({
+            defaultOptions: {
+            queries: {
+            onError: queryErrorHandler,
+            },
+            },
 
-        });
+            });
