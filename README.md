@@ -212,6 +212,7 @@
         -   This is why **dependency arrays** in our query keys is important, they must be unique for each query if the data changes
 
 -   ### Filtering with the `select` option
+
     -   Allow user to filter out any appointments that aren't available
     -   why is the `select` option the best way to do this?
         -   React-query memo-izes to reduce unnecessary computation
@@ -227,3 +228,42 @@
     -   the `select` option is implemented in `useAppointments` and `useStaff` hooks to handle filtering
         -   In useAppointments - the `select` option runs a select function that filters and shows only available appointments
         -   In useStaff - the `select` option runs a select function that filters staff by the different treatments they offer (facial, scrub, massage, etc.)
+
+-   ### Re-Fetching options
+
+          const { data = fallback } = useQuery(queryKeys.treatments, getTreatments, {
+              staleTime: 600000, // 10 minutes
+              cacheTime: 900000, // 15 minutes
+              refetchOnMount: false,
+              refetchOnWindowFocus: false,
+              refetchOnReconnect: false,
+          });
+
+    -   you would set these properties - long `staleTime` and `cacheTime`, no `refetchOnMount`, no `refetchOnWindowFocus`, etc. - when the data you are displaying isn't going to change
+    -   So in our app - the Staff and the Treatments aren't going to change very often
+        -   BUT, our Appointments data will change, so we want to be careful and make sure that data is super fresh all the time
+    -   Another example of constantly changing data would be like stock prices or weather or traffic conditions
+
+-   ### Polling / Auto Re-Fetching
+
+    -   The Appointments data needs to be kept fresh, even if the user takes no action
+    -   **It is likely that available appointments will change on the server while the user is on the site**
+    -   use `refetchInterval` option on `useQuery`
+        -   reference: https://react-query.tanstack.com/examples/auto-refetching
+
+    const { data: appointments = fallback } = useQuery(
+
+        [queryKeys.appointments, monthYear.year, monthYear.month],
+        () => getAppointments(monthYear.year, monthYear.month),
+
+        {
+        select: showAll ? undefined : selectFn,
+        staleTime: 0,
+        cacheTime: 300000, // default (5 minutes)
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        refetchOnReconnect: true,
+        refetchInterval: 60000, // refetch all appointments every 1 minute
+        },
+
+    );

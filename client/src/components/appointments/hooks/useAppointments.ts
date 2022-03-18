@@ -108,6 +108,12 @@ export function useAppointments(): UseAppointments {
     () => getAppointments(monthYear.year, monthYear.month),
     {
       select: showAll ? undefined : selectFn, // this undefined means, if showAll is true, then do nothing with select, ignore it, otherwise, run the selectFn function
+      staleTime: 0,
+      cacheTime: 300000, // default (5 minutes)
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
+      refetchInterval: 60000, // every 1 minute
     },
   );
 

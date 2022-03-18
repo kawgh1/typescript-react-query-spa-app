@@ -30,7 +30,13 @@ export const useTreatments = (): Treatment[] => {
   //   },
   // });
 
-  const { data = fallback } = useQuery(queryKeys.treatments, getTreatments);
+  const { data = fallback } = useQuery(queryKeys.treatments, getTreatments, {
+    staleTime: 60000, // 10 minutes
+    cacheTime: 90000, // 15 minutes
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
   return data;
 };
@@ -44,11 +50,13 @@ export const usePrefetchTreatments = (): void => {
   // set staleTime for this instance to be 5 minutes so that the stale data from pre-fetch
   // does not trigger a re-fetch when user clicks Treatments tab
   // https://react-query.tanstack.com/reference/QueryClient#queryclientsetquerydefaults
-  queryClient.setDefaultOptions({
-    queries: {
-      staleTime: 60000,
-    },
-  });
+  // queryClient.setDefaultOptions({
+  //   queries: {
+  //     staleTime: 60000,
+  //   },
+  // });
   // prefetch call
-  queryClient.prefetchQuery(queryKeys.treatments, getTreatments);
+  queryClient.prefetchQuery(queryKeys.treatments, getTreatments, {
+    staleTime: 60000,
+  });
 };
