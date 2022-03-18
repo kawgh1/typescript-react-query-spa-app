@@ -1,4 +1,7 @@
 -   # React Query in a Larger App
+
+-   This project is based off a course by Bonnie Schulkin
+-   https://www.udemy.com/course/learn-react-query/
     -   ### Typescript
     -   centralizing fetching indicator / error handling
     -   refetching data
