@@ -7,7 +7,7 @@ import { Card } from '../common/Card';
 interface TreatmentProps {
   treatmentData: TreatmentType;
 }
-export function Treatment({ treatmentData }: TreatmentProps): ReactElement {
+export const Treatment = ({ treatmentData }: TreatmentProps): ReactElement => {
   const cardContents = <Text>{treatmentData.description}</Text>;
 
   return (
@@ -17,4 +17,4 @@ export function Treatment({ treatmentData }: TreatmentProps): ReactElement {
       cardContents={cardContents}
     />
   );
-}
+};

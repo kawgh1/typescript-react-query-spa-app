@@ -7,16 +7,15 @@ import { queryKeys } from '../../../react-query/constants';
 import { useCustomToast } from '../../app/hooks/useCustomToast';
 
 // for when we need a query function for useQuery
-async function getTreatments(): Promise<Treatment[]> {
+const getTreatments = async (): Promise<Treatment[]> => {
   const { data } = await axiosInstance.get('/treatments');
   return data;
-}
+};
 
-export function useTreatments(): Treatment[] {
+export const useTreatments = (): Treatment[] => {
   // TODO: get data from server via useQuery
 
-  // queryKeys.treatments just = the string 'treatments', but using an object allows us to
-  // make sure our keys are consistent across components
+  // queryKeys.treatments = 'treatments'
   const { data } = useQuery(queryKeys.treatments, getTreatments);
-  return [];
-}
+  return data;
+};

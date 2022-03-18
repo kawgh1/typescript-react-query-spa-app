@@ -41,3 +41,21 @@
 
         -   using pre-defined query keys in our `useQuery` hooks allows us to be consistent across app components
         -   ` const { data } = useQuery( queryKeys.treatments, getTreatments );`
+
+                File: src/treatments/hooks/useTreatments.js
+
+
+                // query function for useQuery
+
+                const getTreatments = async (): Promise< Treatment[] > => {
+                    const { data } = await axiosInstance.get( '/treatments' );
+                    return data;
+                };
+
+                export const useTreatments = (): Treatment[] => {
+                    // TODO: get data from server via useQuery
+
+                    // queryKeys.treatments = 'treatments'
+                    const { data } = useQuery( queryKeys.treatments, getTreatments );
+                    return data;
+                };

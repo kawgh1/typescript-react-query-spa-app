@@ -4,9 +4,10 @@ import { ReactElement } from 'react';
 import { useTreatments } from './hooks/useTreatments';
 import { Treatment } from './Treatment';
 
-export function Treatments(): ReactElement {
+export const Treatments = (): ReactElement => {
   // replace with data from React Query
   const treatments = useTreatments();
+
   return (
     <Box>
       <Heading mt={10} align="center">
@@ -19,4 +20,4 @@ export function Treatments(): ReactElement {
       </HStack>
     </Box>
   );
-}
+};
