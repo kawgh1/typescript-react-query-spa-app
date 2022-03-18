@@ -1,5 +1,5 @@
 // react query
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import type { Treatment } from '../../../../../shared/types';
 import { axiosInstance } from '../../../axiosInstance';
@@ -33,4 +33,22 @@ export const useTreatments = (): Treatment[] => {
   const { data = fallback } = useQuery(queryKeys.treatments, getTreatments);
 
   return data;
+};
+
+// Prefetch Treatments hook
+// return type is 'void' because it doesn't return anything, it only populates the cache
+
+export const usePrefetchTreatments = (): void => {
+  const queryClient = useQueryClient();
+
+  // set staleTime for this instance to be 5 minutes so that the stale data from pre-fetch
+  // does not trigger a re-fetch when user clicks Treatments tab
+  // https://react-query.tanstack.com/reference/QueryClient#queryclientsetquerydefaults
+  queryClient.setDefaultOptions({
+    queries: {
+      staleTime: 60000,
+    },
+  });
+  // prefetch call
+  queryClient.prefetchQuery(queryKeys.treatments, getTreatments);
 };

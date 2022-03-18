@@ -191,6 +191,7 @@
 | `initialData`     | option to `useQuery`    | client     | yes             |
 
 -   ### Prefetch Treatments (this app)
+
     -   For this app, we want to prefetch the Treatments on home page load, even tho Treatments are only visible on the Treatments page/component
         -   ex.) user research said 85% of home page loads are followed by user clicking to view the treatments tab (reasonable given the product service)
         -   **Treatments don't change often - ie. the data is stable - so cached data isn't really necessary**
@@ -203,3 +204,12 @@
         -   uses the same query function and key as the `useTreatment` call
         -   call `usePrefetchTreatments` from the Home component
             -   As long as user clicks on 'Treatments' tab before `cacheTime` expires (5 minutes), then they won't have to wait on the server call to get the Treatments from the server because the data will already be in the cache from the prefetch
+
+-   ### useAppointment
+
+    -   ### If the data is going to change (ie, appointments for each month) make sure your query key changes to fetch that new data
+        -   Otherwise you will be getting the same data (appointments) for each month
+        -   This is why **dependency arrays** in our query keys is important, they must be unique for each query if the data changes
+
+-   ### Filtering with the `select` option
+    -   Allow user to filter out any appointments that aren't available
