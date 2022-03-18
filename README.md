@@ -89,3 +89,14 @@
                         </Spinner>
                     );
                 }
+
+    -   ### Passing errors to toasts
+        -   Pass `useQuery` errors to Chakra UI "toast"
+            -   First for single call, then centralized for all `useQuery` calls
+        -   `onError` callback to `useQuery`
+            -   Instead of destructuring `isError, error` from `useQuery` return
+            -   Error handling callback runs if query functions throw an error
+            -   `error` parameter to callback
+    -   Will use toasts
+        -   Chakra UI comes with a handy useToast hook
+            -   https://chakra-ui.com/docs/feedback/toast
