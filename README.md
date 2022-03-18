@@ -60,6 +60,7 @@
                 };
 
     -   ### `useIsFetching`
+
         -   in smaller apps
             -   used `isFetching` from `useQuery` return object
             -   Reminder: `isLoading` **is** `isFetching` _plus_ no cached data
@@ -69,3 +70,22 @@
             -   we will create a centralized error handling that **all** of our custom hooks / `useQuery` calls will pull from to display while loading/ fetching
         -   **No need for `isFetching` on every custom hook / `useQuery` call**
         -   see `src/components/app/Loading.tsx`
+
+                export const Loading = (): ReactElement => {
+                    // will use React Query `useIsFetching` to determine whether or not to display loading spinner
+
+                    const isFetching = useIsFetching();
+
+                    // useIsFetching returns a number representing the number of query calls that are currently in the `fetching` state
+
+                    // if useIsFetching > 0, then it will evaluate to `true`
+
+                    const display = isFetching ? 'inherit' : 'none';
+
+                    return (
+
+                        <Spinner>
+                            <Text display="none">Loading...</Text>
+                        </Spinner>
+                    );
+                }
