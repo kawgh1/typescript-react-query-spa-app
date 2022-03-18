@@ -130,3 +130,41 @@
                 return data;
 
             };
+
+    -   ### Setting default `onError` handler for our Query Client
+
+        -   defaults for QueryClient
+        -   https://github.com/tannerlinsley/react-query/blob/master/src/core/types.ts
+
+            {
+            queries: { useQuery options },
+            mutations: { useMutation options }
+            }
+
+        File: src/components/react-query/queryClient.ts
+
+        ...
+        const queryErrorHandler = (error: unknown): void => {
+
+            // error is type unknown because in js, anything can be an error (e.g. throw(5))
+
+            const id = 'react-query-error';
+            const title =
+                error instanceof Error ? error.message : 'error connecting to server';
+
+            // prevent duplicate toasts
+            toast.closeAll();
+            toast({ id, title, status: 'error', variant: 'subtle', isClosable: true });
+
+        }
+
+        // here we establish the defaultOptions of our QueryClient to include the onError handler
+
+        export const queryClient = new QueryClient({
+        defaultOptions: {
+        queries: {
+        onError: queryErrorHandler,
+        },
+        },
+
+        });

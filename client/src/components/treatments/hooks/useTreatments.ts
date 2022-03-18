@@ -18,15 +18,19 @@ export const useTreatments = (): Treatment[] => {
   const fallback = [];
   // TODO: get data from server via useQuery
 
-  // queryKeys.treatments = 'treatments'
-  const { data = fallback } = useQuery(queryKeys.treatments, getTreatments, {
-    onError: (error) => {
-      const title =
-        error instanceof Error
-          ? error.message
-          : 'Error connecting to the server';
-      toast({ title, status: 'error' });
-    },
-  });
+  // we manage error handling by default in src/react-query/queryClient.ts
+
+  // const { data = fallback } = useQuery(queryKeys.treatments, getTreatments, {
+  //   onError: (error) => {
+  //     const title =
+  //       error instanceof Error
+  //         ? error.message
+  //         : 'Error connecting to the server';
+  //     toast({ title, status: 'error' });
+  //   },
+  // });
+
+  const { data = fallback } = useQuery(queryKeys.treatments, getTreatments);
+
   return data;
 };
