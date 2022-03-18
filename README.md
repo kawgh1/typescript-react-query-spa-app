@@ -170,3 +170,12 @@
                         });
 
 ![error-handling-react-query](https://raw.githubusercontent.com/kawgh1/typescript-react-query-spa-app/main/error-handling.png)
+
+-   ### Alternative to `onError` Handler: Error Boundary
+    -   Alternative: handle errors with React Error Boundary
+        -   https://reactjs.org/docs/error-boundaries.html
+    -   `useErrorBoundary` for `useQuery`
+        -   reference: https://react-query.tanstack.com/reference/useQuery
+    -   option to `useQuery` / `useMutation`
+        -   or in `defaultOptions` when creating QueryClient
+    -   if you set error boundary propagation property to `true`, it will propagate errors to the nearest error boundary
