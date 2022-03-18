@@ -68,3 +68,4 @@
             -   `useIsFetching` is a magical hook that tells us if **_any_** hook is still fetching
             -   we will create a centralized error handling that **all** of our custom hooks / `useQuery` calls will pull from to display while loading/ fetching
         -   **No need for `isFetching` on every custom hook / `useQuery` call**
+        -   see `src/components/app/Loading.tsx`
