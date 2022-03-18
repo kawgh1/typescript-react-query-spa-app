@@ -24,9 +24,9 @@ export const AllStaff = (): ReactElement => {
         <HStack my={10} spacing={8} justify="center">
           <Heading size="md">Filter by treatment:</Heading>
           <Radio value="all">All</Radio>
-          {treatments.map((t) => (
-            <Radio key={t.id} value={t.name}>
-              {t.name}
+          {treatments.map((treatment) => (
+            <Radio key={treatment.id} value={treatment.name}>
+              {treatment.name}
             </Radio>
           ))}
         </HStack>

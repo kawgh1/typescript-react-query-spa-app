@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import type { Staff } from '../../../../../shared/types';
@@ -22,9 +22,18 @@ export const useStaff = (): UseStaff => {
   // for filtering staff by treatment
   const [filter, setFilter] = useState('all');
 
+  // FILTERING
+  const selectFn = useCallback(
+    (unfilteredStaff) => filterByTreatment(unfilteredStaff, filter),
+    [filter],
+  );
+
+  // MAIN QUERY
   // get data from server via useQuery
   const fallback = [];
-  const { data: staff = fallback } = useQuery(queryKeys.staff, getStaff);
+  const { data: staff = fallback } = useQuery(queryKeys.staff, getStaff, {
+    select: filter === 'all' ? undefined : selectFn, // undefined just means, do nothing, ignore the select function
+  });
 
   return { staff, filter, setFilter };
 };

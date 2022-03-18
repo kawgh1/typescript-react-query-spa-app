@@ -223,3 +223,7 @@
     -   State of whether filter is on, whether user is filtering out appointments, is contained in hook (like `monthYear`)
     -   filter function in `src/components/appointments/utils.ts`
         -   `getAvailableAppointments`
+    -   ### Note: `select` is not an option for prefetchQueries, just normal useQueries
+    -   the `select` option is implemented in `useAppointments` and `useStaff` hooks to handle filtering
+        -   In useAppointments - the `select` option runs a select function that filters and shows only available appointments
+        -   In useStaff - the `select` option runs a select function that filters staff by the different treatments they offer (facial, scrub, massage, etc.)
