@@ -98,5 +98,35 @@
             -   Error handling callback runs if query functions throw an error
             -   `error` parameter to callback
     -   Will use toasts
+
         -   Chakra UI comes with a handy useToast hook
+
+            -   `src/components/app/hooks/useCustomToast.tsx`
             -   https://chakra-ui.com/docs/feedback/toast
+
+            File: src/components/treatments/hooks/useTreatments.ts
+
+            // for when we need a query function for useQuery
+            const getTreatments = async (): Promise<Treatment[]> => {
+            const { data } = await axiosInstance.get('/treatments');
+            return data;
+            };
+
+            export const useTreatments = (): Treatment[] => {
+
+                const toast = useCustomToast();
+
+                const fallback = [];
+
+                const { data = fallback } = useQuery(queryKeys.treatments, getTreatments, {
+                    onError: (error) => {
+                    const title =
+                        error instanceof Error
+                        ? error.message
+                        : 'Error connecting to the server';
+                    toast({ title, status: 'error' });
+                    },
+                });
+                return data;
+
+            };
