@@ -63,8 +63,8 @@
         -   in smaller apps
             -   used `isFetching` from `useQuery` return object
             -   Reminder: `isLoading` **is** `isFetching` _plus_ no cached data
-        -   in larger app
+        -   in larger apps
             -   Loading spinner whenever **_any_** query `isFetching`
             -   `useIsFetching` is a magical hook that tells us if **_any_** hook is still fetching
-            -   we will create a centralizing error handling that **all** of our custom hooks / `useQuery` calls will pull from to display while loading/ fetching
+            -   we will create a centralized error handling that **all** of our custom hooks / `useQuery` calls will pull from to display while loading/ fetching
         -   **No need for `isFetching` on every custom hook / `useQuery` call**
