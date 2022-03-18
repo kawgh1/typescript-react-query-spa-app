@@ -168,3 +168,5 @@
                             },
 
                         });
+
+![error-handling-react-query](https://raw.githubusercontent.com/kawgh1/typescript-react-query-spa-app/main/error-handling.png)
