@@ -334,7 +334,22 @@
     -   `useAuth`'s responsibility is to provide the functions (signin, signup, signout) that communicate with the Server
 
 -   ### Set React Query Cache values in `useAuth`
+
     -   React Query acting as a provider for auth
     -   In order to set the value in the Query Cache, we use `queryClient.setQueryData` which takes a query key, a value, and sets the query key as that value in the Query Cache
     -   Add this `queryClient.setQueryData` data calls to `updateUser` and `clearUser` in the `useUser` hook
         -   `useAuth` also calls these functions
+
+-   ### Setting Initial Value in React Query Cache
+    -   React Query team is working on plugins to help persist React Query cache data between sessions and refresh, however they are all still 'experimental' and should not be used
+        -   `persistQueryClient` (Experimental)
+        -   `createWebStoragePersistor`(Experimental)
+        -   `createAsyncStoragePersistor` (Experimental)
+        -   `broadcastQueryClient` (Experimental)
+        -   can't even access these pages in the React Query docs
+        -   https://react-query.tanstack.com/overview
+    -   In our App, we will use `initialData` value in `useQuery`
+        -   For use when you want initial value to be added to React Query Cache
+        -   For placeholder, use `placeholderData` or default destructured value
+    -   Initial value will come from `LocalStorage`
+    -   https://react-query.tanstack.com/guides/initial-query-data#using-initialdata-to-prepopulate-a-query

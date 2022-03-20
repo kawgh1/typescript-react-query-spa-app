@@ -38,7 +38,16 @@ export function useUser(): UseUser {
   // call useQuery to update user data from server
   // we're getting the user data from whatever the current value of 'data' returns from server
   // we set the value of user in the Query cache (queryKeys.user) from our useAuth hook so that user 'data' wont be null here
-  const { data: user } = useQuery(queryKeys.user, () => getUser(user));
+  const { data: user } = useQuery(queryKeys.user, () => getUser(user), {
+    // onSuccess callback
+    onSuccess: (received: User | null) => {
+      if (!received) {
+        clearStoredUser();
+      } else {
+        setStoredUser(received);
+      }
+    },
+  });
 
   // meant to be called from useAuth
   function updateUser(newUser: User): void {
