@@ -5,6 +5,11 @@ import { axiosInstance } from '../axiosInstance';
 import { useCustomToast } from '../components/app/hooks/useCustomToast';
 import { useUser } from '../components/user/hooks/useUser';
 
+/* 
+    `useAuth`'s responsibility is to provide the functions (signin, signup, signout) 
+    that communicate with the Server
+*/
+
 interface UseAuth {
   signin: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
@@ -18,7 +23,7 @@ type AuthResponseType = UserResponse | ErrorResponse;
 export function useAuth(): UseAuth {
   const SERVER_ERROR = 'There was an error contacting the server.';
   const toast = useCustomToast();
-  const { clearUser, updateUser } = useUser();
+  const { clearUser, updateUser } = useUser(); // src/components/user/hooks/useUser
 
   async function authServerCall(
     urlEndpoint: string,

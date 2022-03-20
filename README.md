@@ -267,3 +267,73 @@
         },
 
     );
+
+-   ## React Query and Auth
+
+    -   # Note: This app does not use ContextAPI so user state is managed by hand with custom useUser and useAuth hooks. Using ContextAPI would be simpler I think.
+    -   But a good example of how to handle user Auth by hand
+    -   # Note: This app stores sensitive user data in `LocalStorage` to persist that user data on page refresh - this is VERY UNSECURE.
+    -   https://www.rdegges.com/2018/please-stop-using-local-storage/
+    -   He recommends only storing a `sessionId` in local storage for the user and using a backend or API to handle the rest - obviously this is more complex, but necessary for commercial apps
+
+    -   ### Dependent Queries, `setQueryData`, `removeQueries`
+
+-   ### JWT Authentication
+
+    -   This app use JWT (JSON Web Token) authentication
+        -   Other apps might use Firebase / Amplify / some other cloud-based auth
+    -   JWT
+        -   Server sends token to Client on successful login or user creation
+        -   Client sends token in headers with requests as proof of identity so that the Server knows this Client is authorized
+    -   Security
+        -   Token contains encoded info such as the username and user ID
+        -   Decoded and matched on the Server
+    -   In this app, the JWT is stored in the user object
+        -   Persisted in localStorage
+        -   Your auth system may use a different way to persist data between sessions
+
+-   ### React Query and Auth
+
+    -   Who should "own" the user data, `useAuth` or `useQuery`?
+        -   Should `useAuth` call `useQuery` or make the axios call directly?
+        -   Should `useAuth` have a provider, a context, that stores Auth data, or store user data in React Query cache?
+    -   ### Separation of Concerns
+        -   **It helps to think about the specific responsibilities of React Query vs the `useAuth` hook**
+        -   React Query's responsibility is to maintain the Server State on the React Client
+        -   `useAuth`'s responsibility is to provide functions for sign in, sign out and sign up - to authenticate the user on the Server
+        -   **Conclusion:** It makes sense for React Query to store the user data via `useUser` but `useAuth` will help out because it will collect user data from calls to the Server and add to cache
+
+-   ### Role of `useUser`
+
+    -   Returns `user` data from React Query to the cache
+        -   On initialization, we'll load that data from `LocalStorage` (to maintain data if user refreshes the page)
+    -   Keep user data up to date - for instance, when a mutation happens - with server via `useQuery`
+    -   The request of this `useQuery` will send the ID of the logged in user and then we'll get the data for that user back from the Server
+        -   If there is no logged in user, the function will just return `null`
+    -   Whenever user updates (sign in, sign out, mutation) we will update the React Query cache **directly** with `setQueryData`
+        -   Then we'll also update `LocalStorage` with `onSuccess` callback to `useQuery`
+            -   `onSuccess` runs after:
+                -   `setQueryData`
+                -   query function
+            -   So that user data gets updated either way with `onSuccess` being called, whether `setQueryData` is called or if any React Query function is called, like a mutation
+
+-   ### Why not just store user data in an Auth provider?
+
+    -   Definitely a common option
+    -   Disadvantage is added complexity
+        -   It involves maintain a separate Provider (Context) from the React Query cache
+        -   Going to be some redundant data - if allowing for user mutations or user data in both React Query **_and_** a dedicated Auth Provider
+    -   If starting a fresh application - easier to store user data in React Query cache and abandon Auth Provider
+    -   If in a Legacy application - may be more expedient to maintain both
+
+-   ### Code
+
+    -   Check out `src/auth/useAuth` and `src/components/user/hooks/useUser`
+    -   `useUser`'s responsibility is to maintain the user state both in `LocalStorage` and in the React Query cache
+    -   `useAuth`'s responsibility is to provide the functions (signin, signup, signout) that communicate with the Server
+
+-   ### Set React Query Cache values in `useAuth`
+    -   React Query acting as a provider for auth
+    -   In order to set the value in the Query Cache, we use `queryClient.setQueryData` which takes a query key, a value, and sets the query key as that value in the Query Cache
+    -   Add this `queryClient.setQueryData` data calls to `updateUser` and `clearUser` in the `useUser` hook
+        -   `useAuth` also calls these functions
