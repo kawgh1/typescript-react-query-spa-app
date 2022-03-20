@@ -341,6 +341,7 @@
         -   `useAuth` also calls these functions
 
 -   ### Setting Initial Value in React Query Cache
+
     -   React Query team is working on plugins to help persist React Query cache data between sessions and refresh, however they are all still 'experimental' and should not be used
         -   `persistQueryClient` (Experimental)
         -   `createWebStoragePersistor`(Experimental)
@@ -353,3 +354,27 @@
         -   For placeholder, use `placeholderData` or default destructured value
     -   Initial value will come from `LocalStorage`
     -   https://react-query.tanstack.com/guides/initial-query-data#using-initialdata-to-prepopulate-a-query
+
+            export function useUser(): UseUser {
+
+                // establish queryClient
+
+                const queryClient = useQueryClient();
+
+                // call useQuery to update user data from server
+                // we set the value of user in the Query cache (queryKeys.user) from our useAuth hook so that user 'data' wont be null here
+
+                const { data: user } = useQuery(queryKeys.user, () => getUser(user), {
+
+                    // get user object from LocalStorage if exists
+                    initialData: getStoredUser,
+
+                    // onSuccess callback
+                    onSuccess: (received: User | null) => {
+                        if (!received) {
+                            clearStoredUser();
+                        } else {
+                            setStoredUser(received);
+                        }
+                    },
+                });

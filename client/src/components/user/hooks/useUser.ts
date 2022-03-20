@@ -39,6 +39,8 @@ export function useUser(): UseUser {
   // we're getting the user data from whatever the current value of 'data' returns from server
   // we set the value of user in the Query cache (queryKeys.user) from our useAuth hook so that user 'data' wont be null here
   const { data: user } = useQuery(queryKeys.user, () => getUser(user), {
+    // get user object from LocalStorage
+    initialData: getStoredUser,
     // onSuccess callback
     onSuccess: (received: User | null) => {
       if (!received) {
