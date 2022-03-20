@@ -1,3 +1,4 @@
+import { useMutation } from 'react-query';
 import { Appointment } from '../../../../../shared/types';
 import { axiosInstance } from '../../../axiosInstance';
 import { queryKeys } from '../../../react-query/constants';
@@ -24,8 +25,9 @@ export const useReserveAppointment = (): AppointmentMutationFunction => {
   const { user } = useUser();
   const toast = useCustomToast();
 
-  // TODO: replace with mutate function
-  return (appointment: Appointment) => {
-    // nothing to see here
-  };
+  const { mutate } = useMutation((appointment) =>
+    setAppointmentUser(appointment, user.id),
+  );
+
+  return mutate;
 };

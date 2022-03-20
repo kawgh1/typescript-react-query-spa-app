@@ -437,6 +437,7 @@
                     });
 
 -   ### `useMutation`
+
     -   very similar to `useQuery`
     -   Differences:
         -   No cache data because `useMutation` is a one time thing
@@ -451,3 +452,11 @@
             -   used to store what the state was before mutation call so that we can re-store it if the mutation fails
         -   reference:
             -   https://react-query.tanstack.com/reference/useMutation
+
+-   ### TypeScript: Returning `mutate` Function
+    -   Type for returning `mutate` function from a custom hooke
+    -   `useMutateFunction<TData = unknown, TError = unknown, TVariables = void, TContext = unknown>`
+        -   TData - Data type returned by mutation function, ex. `void`
+        -   TError - Error type thrown by mutation function, ex. `Error`
+        -   TVariables - `mutate` function variables type, ex. `Appointment`
+        -   TContext - Context type set in `onMutate` function for optimistic update rollback, ex. `Appointment`
