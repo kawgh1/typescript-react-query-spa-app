@@ -455,7 +455,8 @@
 
 -   ### TypeScript: Returning `mutate` Function
 
-    -   Type for returning `mutate` function from a custom hooke
+    -   `src/components/appointments/hooks/useReserveAppointment`
+    -   Type for returning `mutate` function from a custom hooks
     -   **`useMutateFunction<TData = unknown, TError = unknown, TVariables = void, TContext = unknown>`**
 
         -   TData - Data type returned by mutation function, ex. `void`
@@ -480,6 +481,7 @@
                 };
 
 -   ### `invalidateQueries`
+
     -   currently when a user click an appointment to book, nothing happens. Nothing tells the user the appointment was booked.
     -   To fix this we want to invalidate our previous useQuery and refetch the appointment data with the new booked appointment showing as booked by the user
     -   Invalidate appointments cache data on mutation (reserve appointment is the mutation)
@@ -488,3 +490,24 @@
         -   marks query as stale
         -   triggers re-fetch if query currently being rendered
     -   reference: https://react-query.tanstack.com/guides/query-invalidation
+
+-   ### Query Key Prefixes
+
+    -   Goal: invalidate all queries related to appointments on reserveAppointment (mutation)
+    -   `invalidateQueries` takes a query key **prefix**
+        -   allows us to invalidate all related appointment queries at once
+            -   thus triggering a refetch of appointment data from server, to ensure user is up to date
+        -   can make it exact with `{ exact: true }` option
+        -   other queryClient methods can also take prefix too (like `removeQueries`)
+
+-   ### Query Key Prefix for Appointments
+    -   🔑 key for user appointments
+        -   `[ queryKeys.appointments, queryKeys.user, user?.id ]`
+    -   🔑 key for appointments
+        -   `[queryKeys.appointments, queryMonthYear.year, queryMonthYear.month ]`
+    -   Pass `[ queryKeys.appointments ]` as **prefix** to `invalidateQueries`
+        -   invalidates both, triggering refetch
+    -   For more complicated apps, use functions to create query keys to ensure consistency
+    -   reference:
+        -   query keys - https://react-query.tanstack.com/guides/query-keys
+        -   invalidate queries - https://react-query.tanstack.com/guides/query-invalidation#query-matching-with-invalidatequeries
