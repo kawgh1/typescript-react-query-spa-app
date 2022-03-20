@@ -435,3 +435,19 @@
                             },
                         },
                     });
+
+-   ### `useMutation`
+    -   very similar to `useQuery`
+    -   Differences:
+        -   No cache data because `useMutation` is a one time thing
+            -   it's not like `useQuery` where we have data that we're going to be fetching and re-fetching and updating
+        -   No retries - but this is configurable
+            -   `useQuery` does 3 retries by default
+        -   No refetch
+            -   because there's no data associated
+        -   No `isLoading` vs `isFetching` because `isLoading` is when you're fetching and have no cached data - there is no cached data with mutations, just `isFetching`
+        -   Returns `mutate` function which actually runs mutations
+        -   `onMutate` callback - used for optimistic queries
+            -   used to store what the state was before mutation call so that we can re-store it if the mutation fails
+        -   reference:
+            -   https://react-query.tanstack.com/reference/useMutation

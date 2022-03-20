@@ -1,14 +1,15 @@
 import { Spinner, Text } from '@chakra-ui/react';
 import { ReactElement } from 'react';
-import { useIsFetching } from 'react-query';
+import { useIsFetching, useIsMutating } from 'react-query';
 
 export function Loading(): ReactElement {
   // will use React Query `useIsFetching` to determine whether or not to display
   const isFetching = useIsFetching();
-  // useIsFetching returns a number representing the number of query calls that are currently in the `fetching` state
+  // useIsFetching / useIsMutating returns a number representing the number of query calls / mutations that are currently in the `fetching` state
   // if useIsFetching > 0, then it will evaluate to `true`
+  const isMutating = useIsMutating();
 
-  const display = isFetching ? 'inherit' : 'none';
+  const display = isFetching || isMutating ? 'inherit' : 'none';
 
   return (
     <Spinner
