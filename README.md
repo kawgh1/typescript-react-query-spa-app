@@ -275,6 +275,7 @@
     -   # Note: This app stores sensitive user data in `LocalStorage` to persist that user data on page refresh - this is VERY UNSECURE.
     -   https://www.rdegges.com/2018/please-stop-using-local-storage/
     -   He recommends only storing a `sessionId` in local storage for the user and using a backend or API to handle the rest - obviously this is more complex, but necessary for commercial apps
+    -   can also use third party cloud-auth providers like OAuth
 
     -   ### Dependent Queries, `setQueryData`, `removeQueries`
 
