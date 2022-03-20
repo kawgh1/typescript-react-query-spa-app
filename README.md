@@ -378,3 +378,16 @@
                         }
                     },
                 });
+
+-   ### Dependent Queries
+    -   This app is going to have a separate query for user appointments
+        -   that is, the user appointments are going to have their own query, separate from the user query
+        -   This is because the user appointment data is going to change more frequently than the actual user data
+        -   A bit much for this app, but a good example of demonstrating dependent queries for more complex cases
+    -   Call `useQuery` in `useUserAppointments`
+        -   For now, use key `'user-appointments'`
+        -   But will change to use query key prefixes when we start using mutations on the appointments
+            -   Query Key Prefixes are useful if you want to invalidate a lot of queries at once, or adjust the many queries at once with new data or whatever
+    -   ### Make the query _dependent_ on `user` being truthy
+        -   dependent queries will only run if `user` is NOT null
+    -   reference: https://react-query.tanstack.com/guides/dependent-queries
