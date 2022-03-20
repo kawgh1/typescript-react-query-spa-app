@@ -380,6 +380,7 @@
                 });
 
 -   ### Dependent Queries
+
     -   This app is going to have a separate query for user appointments
         -   that is, the user appointments are going to have their own query, separate from the user query
         -   This is because the user appointment data is going to change more frequently than the actual user data
@@ -391,3 +392,13 @@
     -   ### Make the query _dependent_ on `user` being truthy
         -   dependent queries will only run if `user` is NOT null
     -   reference: https://react-query.tanstack.com/guides/dependent-queries
+
+-   ### Removing Queries and data when user signs out
+    -   Make sure user appointments data is cleared on sign out
+    -   `queryClient.removeQueries`
+    -   Why note use `removeQueries` for clearing user data on sign out?
+        -   Why did we do `setQueryData` for setting user to null instead of `removeQueries`
+        -   `setQueryData` uses the `onSuccess` callback (`removeQueries` does not)
+        -   ### The `onSuccess` callback is what persists the user data to `LocalStorage`!
+            -   **`removeQueries` cannot persist data, therefore shouldn't be used for user object data on which other hooks and components depend**
+        -   `userAppointments` is not persisted in `LocalStorage` and thus does not need `onSuccess` -> thus use `removeQueries` for `userAppointments`
