@@ -454,9 +454,27 @@
             -   https://react-query.tanstack.com/reference/useMutation
 
 -   ### TypeScript: Returning `mutate` Function
+
     -   Type for returning `mutate` function from a custom hooke
     -   **`useMutateFunction<TData = unknown, TError = unknown, TVariables = void, TContext = unknown>`**
+
         -   TData - Data type returned by mutation function, ex. `void`
         -   TError - Error type thrown by mutation function, ex. `Error`
         -   TVariables - `mutate` function variables type, ex. `Appointment`
         -   TContext - Context type set in `onMutate` function for optimistic update rollback, ex. `Appointment`
+
+                export const useReserveAppointment = (): UseMutateFunction<
+                    void,
+                    unknown,
+                    Appointment,
+                    unknown > => {
+                    const { user } = useUser();
+                    const toast = useCustomToast();
+
+                        const { mutate } = useMutation((appointment: Appointment) =>
+                            setAppointmentUser(appointment, user?.id),
+                        );
+
+                        return mutate;
+
+                };
