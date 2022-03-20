@@ -478,3 +478,13 @@
                         return mutate;
 
                 };
+
+-   ### `invalidateQueries`
+    -   currently when a user click an appointment to book, nothing happens. Nothing tells the user the appointment was booked.
+    -   To fix this we want to invalidate our previous useQuery and refetch the appointment data with the new booked appointment showing as booked by the user
+    -   Invalidate appointments cache data on mutation (reserve appointment is the mutation)
+        -   so user doesnt have to refresh the page
+    -   `invalidateQuery` effects:
+        -   marks query as stale
+        -   triggers re-fetch if query currently being rendered
+    -   reference: https://react-query.tanstack.com/guides/query-invalidation
