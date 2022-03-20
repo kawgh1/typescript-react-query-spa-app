@@ -455,7 +455,7 @@
 
 -   ### TypeScript: Returning `mutate` Function
     -   Type for returning `mutate` function from a custom hooke
-    -   `useMutateFunction<TData = unknown, TError = unknown, TVariables = void, TContext = unknown>`
+    -   **`useMutateFunction<TData = unknown, TError = unknown, TVariables = void, TContext = unknown>`**
         -   TData - Data type returned by mutation function, ex. `void`
         -   TError - Error type thrown by mutation function, ex. `Error`
         -   TVariables - `mutate` function variables type, ex. `Appointment`
