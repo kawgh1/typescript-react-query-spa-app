@@ -394,6 +394,7 @@
     -   reference: https://react-query.tanstack.com/guides/dependent-queries
 
 -   ### Removing Queries and data when user signs out
+
     -   Make sure user appointments data is cleared on sign out
     -   `queryClient.removeQueries`
     -   Why note use `removeQueries` for clearing user data on sign out?
@@ -402,3 +403,35 @@
         -   ### The `onSuccess` callback is what persists the user data to `LocalStorage`!
             -   **`removeQueries` cannot persist data, therefore shouldn't be used for user object data on which other hooks and components depend**
         -   `userAppointments` is not persisted in `LocalStorage` and thus does not need `onSuccess` -> thus use `removeQueries` for `userAppointments`
+
+-   # Mutations and Query Invalidations - Updating Data on the Server
+
+    -   Invalidating a query on mutation ensures that bad data is cleared from the React Query Cache and this triggers a re-fetch to get fresh data from server and update the cache
+    -   Optimistic update - assumes mutation will succeed, but rolls back if it doesn't
+
+-   ### Global Error Handling / Fetching with Mutations
+
+    -   very similar to `useQuery` error handling
+    -   update in `src/react-query/queryClient`
+    -   Errors
+        -   set `onError` callback in `mutations` property of query client `defaultOptions`
+    -   Loading Indicator
+
+        -   `useIsMutating` is analogous to `useIsFetching` and will be `true` if any mutations are currently running or unresolved
+        -   Update `Loading` component to show on `isMutating`
+
+        export const queryClient = new QueryClient({
+        defaultOptions: {
+        queries: {
+        onError: queryErrorHandler,
+        // staleTime: 60000, // 10 minutes
+        // cacheTime: 90000, // 15 minutes
+        // refetchOnMount: false,
+        // refetchOnReconnect: false,
+        // refetchOnWindowFocus: false,
+        },
+        mutations: {
+        onError: queryErrorHandler,
+        },
+        },
+        });

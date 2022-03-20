@@ -61,6 +61,8 @@ export function useUser(): UseUser {
   function clearUser() {
     // set user to null in query cache
     queryClient.setQueryData(queryKeys.user, null);
+    // remove user-appointment queries from cache
+    queryClient.removeQueries('user-appointments');
   }
 
   return { user, updateUser, clearUser };
